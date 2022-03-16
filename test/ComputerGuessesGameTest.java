@@ -26,7 +26,6 @@ public class ComputerGuessesGameTest {
     void GuessLowerTest() {
         // the number we picked for the computer to guess is 1
         ComputerGuessesGame game = new ComputerGuessesGame(1, 1000);
-        game.guessLower();
         assertEquals(500, game.getLastGuess());
         game.guessLower();
         assertEquals(250, game.getLastGuess());
