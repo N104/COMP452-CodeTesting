@@ -4,14 +4,16 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StatsPanelTest {
+public class BinTest {
+    final int [] BIN_EDGES = {1, 2, 4, 6, 8, 10, 12, 14};
+
     @Test
     void CalculateOrderedBinCountsTest() {
         GameStatsStub stats = new GameStatsStub(Map.of(
                 1, 2,
                 2, 4
         ));
-        int[] counts = StatsPanel.calculateBinCounts(stats);
+        int[] counts = Bin.calculateBinCounts(BIN_EDGES, stats);
         assertEquals(2, counts[0]);
         assertEquals(4, counts[1]);
     }
@@ -23,7 +25,7 @@ public class StatsPanelTest {
                 3, 2,
                 5, 3
         ));
-        int[] counts = StatsPanel.calculateBinCounts(stats);
+        int[] counts = Bin.calculateBinCounts(BIN_EDGES, stats);
         assertEquals(4, counts[3]);
         assertEquals(3,counts[2]);
         assertEquals(2, counts[1]);
@@ -34,7 +36,7 @@ public class StatsPanelTest {
                 16, 2,
                 18, 4
         ));
-        int[] counts = StatsPanel.calculateBinCounts(stats);
+        int[] counts = Bin.calculateBinCounts(BIN_EDGES, stats);
         assertEquals(6, counts[7]);
     }
 }
