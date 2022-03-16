@@ -8,7 +8,6 @@ import java.util.function.Consumer;
  * Displays the computer's guesses and processes human's answers
  * Tracks the computer's guesses
  *
- * TODO: refactor this class
  */
 public class ComputerGuessesPanel extends JPanel {
 
@@ -21,9 +20,7 @@ public class ComputerGuessesPanel extends JPanel {
     private int lowerBound; // correct number is >= lowerBound
 
     public ComputerGuessesPanel(JPanel cardsPanel, Consumer<GameResult> gameFinishedCallback){
-        numGuesses = 0;
-        upperBound = 1000;
-        lowerBound = 1;
+        initializeValues();
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -41,10 +38,7 @@ public class ComputerGuessesPanel extends JPanel {
 
         JButton lowerBtn = new JButton("Lower");
         lowerBtn.addActionListener(e -> {
-            upperBound = Math.min(upperBound, lastGuess);
-
-            lastGuess = (lowerBound + upperBound + 1) / 2;
-            numGuesses += 1;
+            guessLower();
             guessMessage.setText("I guess " + lastGuess + ".");
         });
         this.add(lowerBtn);
@@ -68,10 +62,7 @@ public class ComputerGuessesPanel extends JPanel {
 
         JButton higherBtn = new JButton("Higher");
         higherBtn.addActionListener(e -> {
-            lowerBound = Math.max(lowerBound, lastGuess + 1);
-
-            lastGuess = (lowerBound + upperBound + 1) / 2;
-            numGuesses += 1;
+            guessHigher();
             guessMessage.setText("I guess " + lastGuess + ".");
         });
         this.add(higherBtn);
@@ -80,14 +71,50 @@ public class ComputerGuessesPanel extends JPanel {
 
         this.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent e) {
-                numGuesses = 0;
-                upperBound = 1000;
-                lowerBound = 1;
-
-                lastGuess = (lowerBound + upperBound + 1) / 2;
+                resetGame();
                 guessMessage.setText("I guess " + lastGuess + ".");
             }
         });
     }
+
+    public int getUpperBound() {
+        return upperBound;
+    }
+
+    public int getLowerBound() {
+        return lowerBound;
+    }
+
+    public int getLastGuess() {
+        return lastGuess;
+    }
+
+    public int getNumGuesses() {
+        return numGuesses;
+    }
+
+    public void guessLower() {
+        upperBound = Math.min(upperBound, lastGuess);
+        lastGuess = (lowerBound + upperBound + 1) / 2;
+        numGuesses += 1;
+    }
+
+    public void guessHigher() {
+        lowerBound = Math.max(lowerBound, lastGuess + 1);
+        lastGuess = (lowerBound + upperBound + 1) / 2;
+        numGuesses += 1;
+    }
+
+    public void resetGame() {
+        initializeValues();
+        lastGuess = (lowerBound + upperBound + 1) / 2;
+    }
+
+    public void initializeValues() {
+        numGuesses = 0;
+        upperBound = 1000;
+        lowerBound = 1;
+    }
+
 
 }
