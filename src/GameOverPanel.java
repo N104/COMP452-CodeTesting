@@ -74,6 +74,7 @@ public class GameOverPanel extends JPanel {
 
     /**
      * updates the UI
+     * TODO: Fully separate the logic
      */
     public void updateUIWithResult() {
         answerTxt.setText("The answer was " + gameResult.correctValue + ".");
