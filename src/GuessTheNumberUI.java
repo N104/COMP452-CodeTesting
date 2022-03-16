@@ -66,7 +66,6 @@ public class GuessTheNumberUI {
         // HUMAN_PLAY
         JPanel humanGuessesPanel = new HumanGuessesPanel(cardsPanel, gameResult -> {
             gameOverPanel.setGameResults(gameResult);
-            gameOverPanel.updateUIWithResult();
             gameOverPanel.saveGameResult();
         });
         addToCards(cardsPanel, humanGuessesPanel, ScreenID.HUMAN_PLAY.name());
@@ -78,7 +77,6 @@ public class GuessTheNumberUI {
         // COMPUTER_PLAY
         JPanel computerGuessesPanel = new ComputerGuessesPanel(cardsPanel, gameResult -> {
             gameOverPanel.setGameResults(gameResult);
-            gameOverPanel.updateUIWithResult();
             gameOverPanel.saveGameResult();
         });
         addToCards(cardsPanel, computerGuessesPanel, ScreenID.COMPUTER_PLAY.name());
