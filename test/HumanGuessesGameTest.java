@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HumanGuessesGameTest {
+    //using dependency injection
     @Test
     void ConstructorTest() {
         RandomStub rnd = new RandomStub(233);
