@@ -21,21 +21,19 @@ public class StatsFile extends GameStats {
     // the past 30 days where the person took that many guesses
     private SortedMap<Integer, Integer> statsMap;
 
-    public StatsFile(){
+    public StatsFile() {
         statsMap = new TreeMap<>();
         LocalDateTime limit = LocalDateTime.now().minusDays(30);
+        populateFile(limit);
+    }
 
+    public void populateFile(LocalDateTime limit) {
         try (CSVReader csvReader = new CSVReader(new FileReader(FILENAME))) {
             String[] values = null;
             while ((values = csvReader.readNext()) != null) {
                 // values should have the date and the number of guesses as the two fields
                 try {
-                    LocalDateTime timestamp = LocalDateTime.parse(values[0]);
-                    int numGuesses = Integer.parseInt(values[1]);
-
-                    if (timestamp.isAfter(limit)) {
-                        statsMap.put(numGuesses, 1 + statsMap.getOrDefault(numGuesses, 0));
-                    }
+                    csvParsing(values, statsMap, limit);
                 }
                 catch(NumberFormatException nfe){
                     // NOTE: In a full implementation, we would log this error and possibly alert the user
@@ -53,6 +51,19 @@ public class StatsFile extends GameStats {
             // NOTE: In a full implementation, we would log this error and alert the user
             // NOTE: For this project, you do not need unit tests for handling this exception.
         }
+    }
+
+    public void csvParsing(String[] values, SortedMap<Integer, Integer> statsMap, LocalDateTime limit) throws CsvValidationException, IOException {
+        LocalDateTime timestamp = LocalDateTime.parse(values[0]);
+        int numGuesses = Integer.parseInt(values[1]);
+
+        if (timestamp.isAfter(limit)) {
+            statsMap.put(numGuesses, 1 + statsMap.getOrDefault(numGuesses, 0));
+        }
+    }
+
+    public SortedMap getMap() {
+        return statsMap;
     }
 
     @Override
