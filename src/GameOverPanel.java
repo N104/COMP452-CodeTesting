@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
  * Panel displays after a game has concluded
  * Displays the game outcome
  * Writes the results to file (if human was guessing)
- *
- * TODO: Refactor the setGameResults method. Leave the rest of this file unchanged.
  */
 public class GameOverPanel extends JPanel {
 
@@ -75,7 +73,6 @@ public class GameOverPanel extends JPanel {
 
     /**
      * updates the UI
-     * TODO: Fully separate the logic
      */
     public void updateUIWithResult() {
         answerTxt.setText("The answer was " + gameResult.correctValue + ".");
